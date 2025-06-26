@@ -26,13 +26,13 @@ const main = async () => {
 
 const parseArguments = (args: string[]) => {
     const remainingValues: string[] = [];
-    const command = Command.find(args.shift() || "start");
+    const command = Command.find(args);
     for (const arg of args) {
         let match;
-        if ((match = arg.match(R_SHORT_MATCH))) {
-            command.registerOption(match[1], "short");
-        } else if ((match = arg.match(R_FULL_MATCH))) {
+        if ((match = arg.match(R_FULL_MATCH))) {
             command.registerOption(match[1], "long");
+        } else if ((match = arg.match(R_SHORT_MATCH))) {
+            command.registerOption(match[1], "short");
         } else {
             const lastOption = command.lastOption;
             if (lastOption?.acceptsValues) {
